@@ -25,7 +25,6 @@ router.get('/', async (req, res) => {
 })
 
 
-
 router.get('/:pid', async (req, res) => {
     try {
         //utilizo params el id
@@ -44,13 +43,15 @@ router.get('/:pid', async (req, res) => {
 })
 
 
+
 router.post('/', async (req, res) => {
     try {
-        const { product } = req.body
-        const result = await productManager.addProduct(product) 
-
+        const { code, description, price, stock, thumbnail, title, category} = req.body
+        const result = await productManager.addProduct( {code, description, price, stock, thumbnail, title, category}) 
+        
         if (result.success) {
             res.status(201).json({ message: 'Producto creado correctamente' })
+            req.io.emit("newProduct", result)
         } else {
             res.status(400).json({ error: result.message })
         }
@@ -59,7 +60,6 @@ router.post('/', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' })
     }
 })
-
 
 router.put('/:pid', async (req, res) => {
     try {

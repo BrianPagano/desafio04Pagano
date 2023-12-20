@@ -28,9 +28,11 @@ class ProductManager {
       try {
           const { title, description, price, thumbnail, code, stock, status, category } = product
           //Valido que todos los campos son obligatorios
-          if (!title || !description || !price || !code || !stock || !status || !category) {
+          if (!title || !description || !price || !code || !stock || !category) {
             console.error ("Todos los campos son obligatorios. Producto no agregado.")
+            console.log (title)
             return { success: false, message: "Todos los campos son obligatorios. Producto no agregado." }
+            
           }
 
           //valido si ya existe el code
@@ -48,7 +50,7 @@ class ProductManager {
             thumbnail,
             code,
             stock,
-            status,
+            status: status ?? true,
             category
           }
 

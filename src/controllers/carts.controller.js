@@ -7,8 +7,6 @@ const productManager = new ProductManager('./archivo/products.json')
 const cartManager = new CartManager('./archivo/cart.json', productManager)
 
 
-
-
 router.post('/', async (req, res) => {
     try {
         await cartManager.addCart()
