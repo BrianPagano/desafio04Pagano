@@ -1,6 +1,6 @@
 <section>
     <h1 class="tituloNewProduct">Ingrese el nuevo producto</h1>
-    <form id="productForm" class="formulario">
+    <form id="productForm" class="formulario" onsubmit="submitForm(); return false;">
         <div class="mb-2"> 
         <label for="title" class="form-label">Titulo</label>
         <input type="text" class="form-control" name="title" id="title">
@@ -29,7 +29,7 @@
         <label for="stock" class="form-label">Stock</label>
         <input type="number" class="form-control" name="stock" id="stock">
         </div>
-        <button type="button" onclick="submitForm()" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
 </section>
 

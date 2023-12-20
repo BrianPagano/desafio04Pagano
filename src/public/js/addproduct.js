@@ -8,7 +8,7 @@ function submitForm() {
         thumbnail: document.getElementById('thumbnail').value,
         code: document.getElementById('code').value,
         stock: document.getElementById('stock').value,
-    };
+    }
 
     // Realiza una solicitud POST utilizando fetch y envía los datos en formato JSON
     fetch('/api/products', {
@@ -20,8 +20,13 @@ function submitForm() {
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data);
-        // Puedes realizar acciones adicionales después de recibir la respuesta, si es necesario
+        console.log(data)
+          // Limpia el formulario
+          document.getElementById('productForm').reset()
+        
+          // Muestra un mensaje de alerta
+          alert('Producto creado correctamente')
+        
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => console.error('Error:', error))
 }
