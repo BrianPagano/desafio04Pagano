@@ -1,86 +1,39 @@
-const socket = io()
-//    socket.on("post",(data) => {console.log(data)})
-socket.on("post",(data) => {console.log(data)})
-socket.on('newProduct', function(product) {
-   console.log(product)
-    const item=product.data    
-    const cardTemplate=document.getElementById("productCardTemplate").content.cloneNode(true)   
-    const cardArticle=cardTemplate.querySelector(".productCard")
-    cardArticle.id = item.id    
-    const title = document.createElement("h2")
-    title.textContent =item.title
-    const cardTitle= cardTemplate.querySelector(".cardTitle")
-    cardTitle.appendChild(title)   
-    
-    const description = document.createElement("span")
-    description.innerText=item.description
-    const price=document.createElement("span")
-    price.innerText=item.price
-    const stock=document.createElement("span")
-    stock.innerText=item.stock
-    const thumbnail=document.createElement("span")
-    thumbnail.innerText=item.thumbnail
-    const cardBody=cardTemplate.querySelector(".cardBody")
-    cardBody.appendChild(description)
-    cardBody.appendChild(price)
-    cardBody.appendChild(stock)
-    cardBody.appendChild(thumbnail)
-    document.querySelector("section").appendChild(cardTemplate)
-  });
-socket.on("eraseProduct",(id)=>{
-    const element=document.getElementById(id)
-    element.remove()
-})
+const socket = io();
 
-    socket.on("data",(data)=>{
-console.log(data)
-        data.data.forEach(item=>{
-            const cardTemplate=document.getElementById("productCardTemplate").content.cloneNode(true)
-            const cardArticle=cardTemplate.querySelector(".productCard")
-            cardArticle.id = item.id
-            const title = document.createElement("h2")
-            title.textContent =item.title
-            const cardTitle= cardTemplate.querySelector(".cardTitle")
-            cardTitle.appendChild(title)   
-            const description = document.createElement("span")
-            description.innerText=item.description
-            const price=document.createElement("span")
-            price.innerText=item.price
-            const stock=document.createElement("span")
-            stock.innerText=item.stock
-            const thumbnail=document.createElement("span")
-            thumbnail.innerText=item.thumbnail
-            const cardBody=cardTemplate.querySelector(".cardBody")
-            cardBody.appendChild(description)
-            cardBody.appendChild(price)
-            cardBody.appendChild(stock)
-            cardBody.appendChild(thumbnail)
-            document.querySelector("section").appendChild(cardTemplate)
-        })
-    })
-    
-    socket.on("dataUpdate",(data)=>{
-        const item=data.data
-        const cardTemplate=document.getElementById("productCardTemplate").content.cloneNode(true)
-      
-        const title = document.createElement("h2")
-        title.textContent =item.title
-        const cardTitle= cardTemplate.querySelector(".cardTitle")
-        cardTitle.appendChild(title)   
-        const description = document.createElement("span")
-        description.innerText=item.description
-        const price=document.createElement("span")
-        price.innerText=item.price
-        const stock=document.createElement("span")
-        stock.innerText=item.stock
-        const thumbnail=document.createElement("span")
-        thumbnail.innerText=item.thumbnail
-        const cardBody=cardTemplate.querySelector(".cardBody")
-        cardBody.appendChild(description)
-        cardBody.appendChild(price)
-        cardBody.appendChild(stock)
-        cardBody.appendChild(thumbnail)
-        document.querySelector("section").appendChild(cardTemplate)
-    
-    })
-    
+socket.on('connect', () => {
+    console.log('Conexión exitosa al servidor de socket.io');
+});
+
+// Escucho el evento 'newProduct' para manejar el agregado de un nuevo product
+socket.on('newProduct', function(product) {
+    // Aquí debes actualizar la vista con el nuevo producto
+    updateViewWithNewProduct(product);
+});
+
+function updateViewWithNewProduct(product) {
+    const productsContainer = document.getElementById('contenedorProducto');
+
+    // Crea un nuevo elemento div para representar el nuevo producto
+    const productCard = document.createElement('div');
+    productCard.classList.add('card');
+
+    // Aquí debes agregar la estructura de tu tarjeta de producto utilizando los datos del nuevo producto
+    productCard.innerHTML = `
+        <picture>
+            <img src="/img/${product.data.thumbnail}" class="card-img-top" alt=${product.data.title}/>
+        </picture>
+        <div class="card-body">
+            <h3 class="card-title">${product.data.title}</h3>
+            <p>COD: ${product.data.code}</p>
+            <p class='precioYCant'> 
+                Precio: $${product.data.price} Cantidad: ${product.data.stock}
+            </p>
+        </div>
+        <button to="/item/${product.data.id}" class="btn btn2">
+            Ver detalle
+        </button>
+    `;
+
+    // Agrega el nuevo elemento a tu contenedor de productos
+    productsContainer.appendChild(productCard);
+}

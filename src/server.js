@@ -13,7 +13,7 @@ app.use(express.static(process.cwd() + '/src/public'))
 app.use(bodyParser.json());
 
 // Configura Express para servir archivos estáticos desde la carpeta 'node_modules/bootstrap/dist'
-app.use('/bootstrap', express.static(process.cwd() + 'node_modules/bootstrap/dist'))
+app.use('/bootstrap', express.static(process.cwd() + '/node_modules/bootstrap/dist'))
 
 app.engine('handlebars', handlebars.engine())
 app.set('views', process.cwd() + '/src/views')
@@ -24,10 +24,6 @@ const httpServer = app.listen(port, () => {
 })
 
 const io = new Server(httpServer);
-
-io.on('connection', socket => {
-  console.log(socket.id)
-})
 
 app.locals.io = io
 

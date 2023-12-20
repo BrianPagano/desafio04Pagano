@@ -61,11 +61,18 @@
   /*Estilos para addProducts*/
 
   .tituloNewProduct {
-    font-size: 40px;
+    font-size: 30px;
     text-align: center;
     margin-top: 10px;
+    margin-bottom: 20px;
   }
 
   .formulario {
-    padding: 10px 300px 0px 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  section form input {
+    width: 300px !important;
   }
