@@ -1,9 +1,9 @@
 const express = require('express')
 const router = require('./router/router')
 const { port } = require('./configs/server.config')
-const { Server } = require("socket.io");
+const { Server } = require("socket.io")
 const handlebars = require('express-handlebars')
-const bodyParser = require('body-parser');
+const bodyParser = require('body-parser')
 
 const app = express()
 
@@ -19,18 +19,19 @@ app.engine('handlebars', handlebars.engine())
 app.set('views', process.cwd() + '/src/views')
 app.set('view engine', 'handlebars')
 
-router(app)
-
 const httpServer = app.listen(port, () => {
   console.log(`Server running at port ${port}`)
 })
 
-const io = new Server(httpServer)
+const io = new Server(httpServer);
 
 io.on('connection', socket => {
   console.log(socket.id)
 })
 
+app.locals.io = io
+
+router(app)
 
 
 

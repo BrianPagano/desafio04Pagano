@@ -1,7 +1,7 @@
-const { Router } = require('express')
-const router = Router()
-const ProductManager = require('../productManager')
-const productManager = new ProductManager('./archivo/products.json')
+    const { Router } = require('express')
+    const router = Router()
+    const ProductManager = require('../productManager')
+    const productManager = new ProductManager('./archivo/products.json')
 
 router.get('/', async (req, res) => {
     try {
@@ -42,8 +42,6 @@ router.get('/:pid', async (req, res) => {
     }
 })
 
-
-
 router.post('/', async (req, res) => {
     try {
         const { code, description, price, stock, thumbnail, title, category} = req.body
@@ -51,9 +49,11 @@ router.post('/', async (req, res) => {
         
         if (result.success) {
             res.status(201).json({ message: 'Producto creado correctamente' })
-            req.io.emit("newProduct", result)
+            req.app.locals.io.emit("newProduct", result)
+            return
         } else {
             res.status(400).json({ error: result.message })
+            return
         }
     } catch (error) {
         console.error ('Error al cargar productos:', error.message)
@@ -91,5 +91,5 @@ router.get('*', (req, res) => {
     res.status(404).json ({ error: 'Not Found'})
 })
 
+module.exports = router 
 
-module.exports = router
