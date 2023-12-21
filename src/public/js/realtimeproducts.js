@@ -17,7 +17,7 @@ function updateViewWithNewProduct(product) {
     const productCard = document.createElement('div');
     productCard.classList.add('card');
 
-    // Aquí debes agregar la estructura de tu tarjeta de producto utilizando los datos del nuevo producto
+    // agrego la estructura de mi tarjeta de producto utilizando los datos del nuevo producto
     productCard.innerHTML = `
         <picture>
             <img src="/img/${product.data.thumbnail}" class="card-img-top" alt=${product.data.title}/>
@@ -34,6 +34,6 @@ function updateViewWithNewProduct(product) {
         </button>
     `;
 
-    // Agrega el nuevo elemento a tu contenedor de productos
+    // Agrega el nuevo elemento al contenedor de productos
     productsContainer.appendChild(productCard);
 }
