@@ -4,13 +4,20 @@ socket.on('connect', () => {
     console.log('Conexión exitosa al servidor de socket.io');
 });
 
+socket.on ('messageServer', (data) => {
+    console.log(data);
+})
+
 // Escucho el evento 'newProduct' para manejar el agregado de un nuevo product
-socket.on('newProduct', function(product) {
+socket.on('newProduct', (product) => {
     // Aquí debes actualizar la vista con el nuevo producto
-    updateViewWithNewProduct(product);
+    console.log (product)
+    asyncUpdateViewWithNewProduct(product);
 });
 
-function updateViewWithNewProduct(product) {
+
+function asyncUpdateViewWithNewProduct(product) {
+    try {
     const productsContainer = document.getElementById('contenedorProducto');
 
     // Crea un nuevo elemento div para representar el nuevo producto
@@ -36,4 +43,7 @@ function updateViewWithNewProduct(product) {
 
     // Agrega el nuevo elemento al contenedor de productos
     productsContainer.appendChild(productCard);
+    } catch (error) {
+        console.error('Error al actualizar la vista:', error);
+    }
 }

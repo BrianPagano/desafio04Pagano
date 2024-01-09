@@ -3,6 +3,7 @@
     const ProductManager = require('../productManager')
     const productManager = new ProductManager('./archivo/products.json')
 
+
 router.get('/', async (req, res) => {
     try {
      //leo el parametro de consulta limit para la query
@@ -49,12 +50,11 @@ router.post('/', async (req, res) => {
         
         if (result.success) {
             res.status(201).json({ message: 'Producto creado correctamente' })
-            req.app.locals.io.emit("newProduct", result)
-            return
+            req.app.locals.io.emit('newProduct', (result))
         } else {
             res.status(400).json({ error: result.message })
-            return
         }
+        return
     } catch (error) {
         console.error ('Error al cargar productos:', error.message)
         res.status(500).json({ error: 'Internal Server Error' })

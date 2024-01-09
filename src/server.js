@@ -25,6 +25,14 @@ const httpServer = app.listen(port, () => {
 
 const io = new Server(httpServer);
 
+io.on ('connection', (websocket) => {
+  console.log (websocket.id)
+  websocket.on ('messagefront', (data) => {
+    console.log ('mensaje desde el front', data)
+  })
+  websocket.emit ('messageServer', "soy servidor")
+})
+
 app.locals.io = io
 
 router(app)
