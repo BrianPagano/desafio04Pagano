@@ -43,23 +43,24 @@ router.get('/:pid', async (req, res) => {
     }
 })
 
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
     try {
-        const { code, description, price, stock, thumbnail, title, category} = req.body
-        const result = await productManager.addProduct( {code, description, price, stock, thumbnail, title, category}) 
-        
-        if (result.success) {
-            res.status(201).json({ message: 'Producto creado correctamente' })
-            req.app.locals.io.emit('newProduct', (result))
-        } else {
-            res.status(400).json({ error: result.message })
-        }
-        return
+      const { code, description, price, stock, thumbnail, title, category } = req.body
+      const result = await productManager.addProduct({code,description,price,stock,thumbnail,title,category})
+  
+      if (result.success) {
+        res.status(201).json({ message: "Producto creado correctamente" })
+        const productData = {code,description,price,stock,thumbnail,title,category}
+        req.app.locals.io.emit("newProduct", { data: productData })
+      } else {
+        res.status(400).json({ error: result.message })
+      }
+      return
     } catch (error) {
-        console.error ('Error al cargar productos:', error.message)
-        res.status(500).json({ error: 'Internal Server Error' })
+      console.error("Error al cargar productos:", error.message)
+      res.status(500).json({ error: "Internal Server Error" })
     }
-})
+  })
 
 router.put('/:pid', async (req, res) => {
     try {

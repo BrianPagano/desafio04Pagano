@@ -11,8 +11,7 @@ socket.on ('messageServer', (data) => {
 // Escucho el evento 'newProduct' para manejar el agregado de un nuevo product
 socket.on('newProduct', (product) => {
     // Aquí debes actualizar la vista con el nuevo producto
-    console.log (product)
-    asyncUpdateViewWithNewProduct(product);
+    asyncUpdateViewWithNewProduct(product.data);
 });
 
 
@@ -27,16 +26,16 @@ function asyncUpdateViewWithNewProduct(product) {
     // agrego la estructura de mi tarjeta de producto utilizando los datos del nuevo producto
     productCard.innerHTML = `
         <picture>
-            <img src="/img/${product.data.thumbnail}" class="card-img-top" alt=${product.data.title}/>
+            <img src="/img/${product.thumbnail}" class="card-img-top" alt=${product.title}/>
         </picture>
         <div class="card-body">
-            <h3 class="card-title">${product.data.title}</h3>
-            <p>COD: ${product.data.code}</p>
+            <h3 class="card-title">${product.title}</h3>
+            <p>COD: ${product.code}</p>
             <p class='precioYCant'> 
-                Precio: $${product.data.price} Cantidad: ${product.data.stock}
+                Precio: $${product.price} Cantidad: ${product.stock}
             </p>
         </div>
-        <button to="/item/${product.data.id}" class="btn btn2">
+        <button to="/item/${product.id}" class="btn btn2">
             Ver detalle
         </button>
     `;
